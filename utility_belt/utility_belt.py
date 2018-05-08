@@ -20,13 +20,21 @@ class lammps_parser:
 
     def __init__(self, file, run=0):
         count = 0
+        self.file = file
         for num, line in enumerate(open(file, 'r').readlines()):
              if line.startswith('Step') and (count == run):          
-                self.firstline = num + 1
-                self.properties = line.split()
+                 self.firstline = num + 1
+                 self.properties = line.split()
              if line.startswith('Loop time') and (count == run):
                  self.lastline = num - 1 
-                 count += 1          
+                 count += 1
+    
+    def explore_file(self):     
+        for num, line in enumerate(open(self.file, 'r').readlines()):
+            if num >= self.firstline and num <= self.lastline:
+                values = [float(s) for s in line.split()]
+                yield dict(zip(self.properties,values))
+                  
 
 def canvas(with_attribution=True):
     """

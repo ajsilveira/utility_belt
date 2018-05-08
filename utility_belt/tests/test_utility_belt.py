@@ -16,3 +16,9 @@ def test_constructor():
     assert a.properties == ['Step', 'Temp','PotEng','KinEng','TotEng','Press','2'] + ['Esoftcor']*16
     assert a.firstline == 89
     assert a.lastline == 90
+
+def test_explore_lines():
+    a=ub.lammps_parser('data/log.lammps')
+    for f in a.explore_file():
+        u = f['PotEng']
+    assert u == -3178.119     
