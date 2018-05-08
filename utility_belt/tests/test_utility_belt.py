@@ -13,7 +13,7 @@ def test_utility_belt_imported():
 
 def test_constructor():
     a=ub.lammps_parser('data/log.lammps')
-    assert a.properties == ['Step', 'Temp','PotEng','KinEng','TotEng','Press','2'] + ['Esoftcor']*16
+    assert a.properties == ['Step', 'Temp','PotEng','KinEng','TotEng']
     assert a.firstline == 89
     assert a.lastline == 90
 
@@ -21,4 +21,12 @@ def test_explore_lines():
     a=ub.lammps_parser('data/log.lammps')
     for f in a.explore_file():
         u = f['PotEng']
-    assert u == -3178.119     
+    assert u == -3178.119
+
+def test_data_frame():
+    a=ub.lammps_parser('data/log.lammps')
+    assert a.data_frame()['PotEng'].tolist() == [-3196.8652, -3178.119]
+
+
+
+

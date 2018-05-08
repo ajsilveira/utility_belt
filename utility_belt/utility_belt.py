@@ -5,6 +5,9 @@ A set of tools for my work
 Handles the primary functions
 """
 
+# Import package, test suite, and other packages as needed
+import pandas as pd
+
 class lammps_parser:
     """
     A parser for LAMMPS log files.
@@ -35,6 +38,10 @@ class lammps_parser:
                 values = [float(s) for s in line.split()]
                 yield dict(zip(self.properties,values))
                   
+
+    def data_frame(self):
+        return pd.read_csv(self.file, sep= '\s+', skiprows = self.firstline - 1,
+                           nrows = self.lastline - self.firstline + 1)
 
 def canvas(with_attribution=True):
     """

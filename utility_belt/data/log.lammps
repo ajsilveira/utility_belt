@@ -86,13 +86,13 @@ WARNING: New thermo_style command, previous thermo_modify settings will be lost 
 run		200
 Lambda grid: (0; 0.05; 0.1; 0.2; 0.3; 0.4; 0.5; 0.6; 0.65; 0.7; 0.75; 0.8; 0.85; 0.9; 0.95; 1)
 Memory usage per processor = 16.2879 Mbytes
-Step Temp PotEng KinEng TotEng Press 2 Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor 
-       0     302.7786   -3196.8652    643.50067   -2553.3645    15733.878            0            0  -0.50320088   -1.0043353   -1.9977184    -2.973787   -3.9242297   -4.8381042   -5.7008707   -6.1072283   -6.4929902   -6.8545946   -7.1878555   -7.4878309   -7.7486591   -7.9633511   -8.1235265 
-      10    307.58841    -3178.119    653.72304   -2524.3959    14139.113            1            0  -0.49719884  -0.99258111   -1.9751846   -2.9412609   -3.8819608   -4.7851644   -5.6339909   -6.0308826   -6.4044423   -6.7499282   -7.0615364   -7.3321013   -7.5526898   -7.7120444   -7.7958063 
+Step Temp PotEng KinEng TotEng
+       0     302.7786   -3196.8652    643.50067   -2553.3645
+      10    307.58841    -3178.119    653.72304   -2524.3959
 Loop time of 0.723973 on 8 procs for 200 steps with 1074 atoms
-Step Temp PotEng KinEng TotEng Press 2 Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor 
-       0     302.7786   -3196.8652    643.50067   -2553.3645    15733.878            0            0  -0.50320088   -1.0043353   -1.9977184    -2.973787   -3.9242297   -4.8381042   -5.7008707   -6.1072283   -6.4929902   -6.8545946   -7.1878555   -7.4878309   -7.7486591   -7.9633511   -8.1235265 
-      10    307.58841    -3178.119    653.72304   -2524.3959    14139.113            1            0  -0.49719884  -0.99258111   -1.9751846   -2.9412609   -3.8819608   -4.7851644   -5.6339909   -6.0308826   -6.4044423   -6.7499282   -7.0615364   -7.3321013   -7.5526898   -7.7120444   -7.7958063 
+Step Temp PotEng KinEng TotEng
+       0     302.7786   -3196.8652    643.50067   -2553.3645
+      10    307.58841    -3178.119    653.72304   -2524.3959
 Loop time of 0.723973 on 8 procs for 200 steps with 1074 atoms
 
 Pair  time (%) = 0.22909 (31.6435)
