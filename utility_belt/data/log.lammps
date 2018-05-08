@@ -1,0 +1,117 @@
+LAMMPS (22 May 2014)
+variable	rc equal 10.0
+variable	skin equal 1.0
+variable	Seed equal 6384
+units		real
+atom_style	full
+bond_style	harmonic
+angle_style	harmonic
+pair_style	hybrid lj/sf/coul/sf 10.0 lj/cut/softcore 10.0
+pair_modify	mix arithmetic
+
+read_data	water_benzene_npt.lmp
+  orthogonal box = (-11.2089 -11.2089 -11.2089) to (11.2089 11.2089 11.2089)
+  2 by 2 by 2 MPI processor grid
+  reading atoms ...
+  1074 atoms
+  reading velocities ...
+  1074 velocities
+  scanning bonds ...
+  1 = max bonds/atom
+  scanning angles ...
+  1 = max angles/atom
+  reading bonds ...
+  717 bonds
+  reading angles ...
+  360 angles
+  2 = max # of 1-2 neighbors
+  2 = max # of 1-3 neighbors
+  3 = max # of 1-4 neighbors
+  5 = max # of special neighbors
+
+timestep 	4.5
+
+neighbor	${skin} bin
+neighbor	1 bin
+neigh_modify	delay 0 every 1
+
+pair_coeff	1 1 lj/cut/softcore 0.100354 3.695
+pair_coeff	1 2 lj/cut/softcore 0.0 1.8475
+pair_coeff	1 3 lj/cut/softcore 0.1235469 3.42285
+
+pair_coeff	2 2 lj/sf/coul/sf 0.0 0.0
+pair_coeff	3 3 lj/sf/coul/sf 0.1521 3.1507
+pair_coeff	2 3 lj/sf/coul/sf 0.0 1.57535
+
+delete_bonds    all bond 1
+  717 total bonds, 712 turned on, 5 turned off
+  360 total angles, 360 turned on, 0 turned off
+  0 total dihedrals, 0 turned on, 0 turned off
+  0 total impropers, 0 turned on, 0 turned off
+delete_bonds    all angle 1
+  717 total bonds, 712 turned on, 5 turned off
+  360 total angles, 356 turned on, 4 turned off
+  0 total dihedrals, 0 turned on, 0 turned off
+  0 total impropers, 0 turned on, 0 turned off
+delete_bonds    all bond 2
+  717 total bonds, 0 turned on, 717 turned off
+  360 total angles, 356 turned on, 4 turned off
+  0 total dihedrals, 0 turned on, 0 turned off
+  0 total impropers, 0 turned on, 0 turned off
+delete_bonds    all angle 2
+  717 total bonds, 0 turned on, 717 turned off
+  360 total angles, 0 turned on, 360 turned off
+  0 total dihedrals, 0 turned on, 0 turned off
+  0 total impropers, 0 turned on, 0 turned off
+neigh_modify    exclude molecule all
+
+
+pair_modify     lj/cut/softcore alpha 0.5 n 1 p 1 lambda 0.5
+pair_modify	lj/cut/softcore set_grid 16 0.0 0.05 0.1 0.2 0.3 0.4 0.5 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0
+
+fix		1 all rigid/nve/small molecule
+357 rigid bodies with 1074 atoms
+  2.8 = max distance from body owner to body atom
+fix		2 all hmc 10 123 300.0 1
+
+compute         Esoftcore all softcore/grid
+
+thermo_modify	norm no
+
+thermo		10
+
+thermo_style	custom step temp pe ke etotal press f_2 c_Esoftcore[1] c_Esoftcore[2] c_Esoftcore[3] c_Esoftcore[4] c_Esoftcore[5] c_Esoftcore[6] c_Esoftcore[7] c_Esoftcore[8] c_Esoftcore[9] c_Esoftcore[10] c_Esoftcore[11] c_Esoftcore[12] c_Esoftcore[13] c_Esoftcore[14] c_Esoftcore[15] c_Esoftcore[16]
+WARNING: New thermo_style command, previous thermo_modify settings will be lost (../output.cpp:665)
+
+run		200
+Lambda grid: (0; 0.05; 0.1; 0.2; 0.3; 0.4; 0.5; 0.6; 0.65; 0.7; 0.75; 0.8; 0.85; 0.9; 0.95; 1)
+Memory usage per processor = 16.2879 Mbytes
+Step Temp PotEng KinEng TotEng Press 2 Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor 
+       0     302.7786   -3196.8652    643.50067   -2553.3645    15733.878            0            0  -0.50320088   -1.0043353   -1.9977184    -2.973787   -3.9242297   -4.8381042   -5.7008707   -6.1072283   -6.4929902   -6.8545946   -7.1878555   -7.4878309   -7.7486591   -7.9633511   -8.1235265 
+      10    307.58841    -3178.119    653.72304   -2524.3959    14139.113            1            0  -0.49719884  -0.99258111   -1.9751846   -2.9412609   -3.8819608   -4.7851644   -5.6339909   -6.0308826   -6.4044423   -6.7499282   -7.0615364   -7.3321013   -7.5526898   -7.7120444   -7.7958063 
+Loop time of 0.723973 on 8 procs for 200 steps with 1074 atoms
+Step Temp PotEng KinEng TotEng Press 2 Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor Esoftcor 
+       0     302.7786   -3196.8652    643.50067   -2553.3645    15733.878            0            0  -0.50320088   -1.0043353   -1.9977184    -2.973787   -3.9242297   -4.8381042   -5.7008707   -6.1072283   -6.4929902   -6.8545946   -7.1878555   -7.4878309   -7.7486591   -7.9633511   -8.1235265 
+      10    307.58841    -3178.119    653.72304   -2524.3959    14139.113            1            0  -0.49719884  -0.99258111   -1.9751846   -2.9412609   -3.8819608   -4.7851644   -5.6339909   -6.0308826   -6.4044423   -6.7499282   -7.0615364   -7.3321013   -7.5526898   -7.7120444   -7.7958063 
+Loop time of 0.723973 on 8 procs for 200 steps with 1074 atoms
+
+Pair  time (%) = 0.22909 (31.6435)
+Bond  time (%) = 8.20458e-05 (0.0113327)
+Neigh time (%) = 0.327225 (45.1986)
+Comm  time (%) = 0.085103 (11.755)
+Outpt time (%) = 0.000978559 (0.135165)
+Other time (%) = 0.0814933 (11.2564)
+
+Nlocal:    134.25 ave 151 max 123 min
+Histogram: 1 0 1 2 3 0 0 0 0 1
+Nghost:    3347.62 ave 3420 max 3278 min
+Histogram: 1 0 1 1 1 2 0 0 1 1
+Neighs:    35521.5 ave 39444 max 32391 min
+Histogram: 1 0 2 0 3 0 1 0 0 1
+
+Total # of neighbors = 284172
+Ave neighs/atom = 264.592
+Ave special neighs/atom = 2.01117
+Neighbor list builds = 75
+Dangerous builds = 0
+
