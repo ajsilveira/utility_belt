@@ -7,6 +7,7 @@ Handles the primary functions
 
 # Import package, test suite, and other packages as needed
 import pandas as pd
+import matplotlib.pyplot as plt
 
 class lammps_parser:
     """
@@ -25,12 +26,16 @@ class lammps_parser:
         count = 0
         self.file = file
         for num, line in enumerate(open(file, 'r').readlines()):
-             if line.startswith('Step') and (count == run):          
-                 self.firstline = num + 1
-                 self.properties = line.split()
-             if line.startswith('Loop time') and (count == run):
-                 self.lastline = num - 1 
+#            print (line.startswith('Loop time'), count, run) 
+            if line.startswith('Step') or line.startswith('eta1_1'):          
                  count += 1
+                 if count == run:
+                     print (line)
+                     self.firstline = num + 1
+                     self.properties = line.split()
+            if line.startswith('Loop time') and (count == run):
+                 self.lastline = num - 1 
+                 
     
     def explore_file(self):     
         for num, line in enumerate(open(self.file, 'r').readlines()):
@@ -42,6 +47,7 @@ class lammps_parser:
     def data_frame(self):
         return pd.read_csv(self.file, sep= '\s+', skiprows = self.firstline - 1,
                            nrows = self.lastline - self.firstline + 1)
+
 
 def canvas(with_attribution=True):
     """

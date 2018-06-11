@@ -6,6 +6,8 @@ Unit and regression test for the utility_belt package.
 import utility_belt as ub
 import pytest
 import sys
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def test_utility_belt_imported():
     """Sample test, will always pass so long as import statement worked"""
@@ -29,4 +31,11 @@ def test_data_frame():
 
 
 
+fig1 = plt.figure()
+ax1 = fig1.add_subplot(111)
+tlow=ub.lammps_parser('data/tlow.log',run =1)
+tlow.data_frame().hist(column='Hs', bins=100, ax = ax1, alpha = 0.5)
+thigh=ub.lammps_parser('data/thigh.log',run=1)
+thigh.data_frame().hist(column='Hs', bins=100, ax = ax1, alpha = 0.5)
+plt.show()
 
