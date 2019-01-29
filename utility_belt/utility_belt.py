@@ -26,23 +26,22 @@ class lammps_parser:
         count = 0
         self.file = file
         for num, line in enumerate(open(file, 'r').readlines()):
-#            print (line.startswith('Loop time'), count, run) 
-            if line.startswith('Step') or line.startswith('eta1_1'):          
+#            print (line.startswith('Loop time'), count, run)
+            if line.startswith('Step') or line.startswith('eta1_1'):
                  count += 1
                  if count == run:
-                     print (line)
                      self.firstline = num + 1
                      self.properties = line.split()
             if line.startswith('Loop time') and (count == run):
-                 self.lastline = num - 1 
-                 
-    
-    def explore_file(self):     
+                 self.lastline = num - 1
+
+
+    def explore_file(self):
         for num, line in enumerate(open(self.file, 'r').readlines()):
             if num >= self.firstline and num <= self.lastline:
                 values = [float(s) for s in line.split()]
                 yield dict(zip(self.properties,values))
-                  
+
 
     def data_frame(self):
         return pd.read_csv(self.file, sep= '\s+', skiprows = self.firstline - 1,
